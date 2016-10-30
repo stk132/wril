@@ -13,6 +13,8 @@
   "dependencies": {
     "axios": "^0.15.2",
     "cheerio-httpcli": "^0.6.9",
+    "commander": "^2.9.0",
+    "mkdirp": "^0.5.1",
     "request": "^2.75.0",
     "try-thread-sleep": "^1.0.0"
   },
