@@ -1,6 +1,8 @@
-# What is this?
+# wril
 
-search speakerdeck slide url from your pocket.
+wril(won't read it later)
+
+search speakerdeck slide url from your pocket(read it later service) account.
 and download slide as pdf.
 
 ## install
