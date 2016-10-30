@@ -5,14 +5,18 @@ const fs = require('fs');
 const mkdirp = require('mkdirp');
 const axios = require('axios');
 const program = require('commander');
+const POCKET_GET_ENDPOINT = 'https://getpocket.com/v3/get';
+const STATE_SET = new Set(['archive', 'unread', 'all']);
 program
   .version('0.0.1')
   .option('-d, --download-dir <n>', 'pdf download directory')
   .option('-c, --download-count <n>', 'pdf download count')
+  .option('-s, --entry-state <n>', 'pocket entry state')
   .parse(process.argv)
 
 let pdf_dir = '/tmp';
 let pdf_dl_cnt = '10';
+let entry_state = 'unread';
 
 if (program.downloadDir) {
   pdf_dir = program.downloadDir;
@@ -23,12 +27,20 @@ if (program.downloadDir) {
     process.exit(1);
   }
 }
+
 if (program.downloadCount) pdf_dl_cnt = program.downloadCount;
 
-axios.post('https://getpocket.com/v3/get', {
+if (program.entryState) entry_state = program.entryState;
+if (!STATE_SET.has(entry_state)) {
+  console.error(`error: ${entry_state} is invalid state. please specify archive or unread or all.`);
+  process.exit(1);
+}
+
+
+axios.post(POCKET_GET_ENDPOINT, {
   "consumer_key": process.env.POCKET_CONSUMER_KEY,
   "access_token": process.env.POCKET_ACCESS_TOKEN,
-  "state": "unread",
+  "state": entry_state,
   "count": pdf_dl_cnt,
   "sort": "newest",
   "search": "speakerdeck"
