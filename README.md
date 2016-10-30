@@ -9,6 +9,7 @@ and download slide as pdf.
 
 ``` shell
 npm install
+npm run build
 ```
 
 set your pocket consumer_key, access_token to environment variable like below.
